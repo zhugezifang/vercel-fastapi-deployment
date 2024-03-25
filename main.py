@@ -1,9 +1,12 @@
 from time import time
-from fastapi import FastAPI, __version__
+from fastapi import FastAPI, __version__,Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 import requests
+
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -15,6 +18,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+templates = Jinja2Templates(directory="templates")
+@app.get("/hello/", response_class=HTMLResponse)
+async def hello(request: Request):
+   return templates.TemplateResponse("hello.html", {"request": request})
 
 html = f"""
 <!DOCTYPE html>
