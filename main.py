@@ -2,6 +2,17 @@ from time import time
 from fastapi import FastAPI, __version__
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
+import requests
+
+# 允许所有来源的请求
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -33,3 +44,35 @@ async def root():
 @app.get('/ping')
 async def hello():
     return {'res': 'pong', 'version': __version__, "time": time()}
+
+@app.get("/api/ai")
+def ai_function(img: str):
+
+    # OCR API 的密钥
+    api_key = "K88294794488957"
+    #image_url = "https://img-blog.csdnimg.cn/img_convert/9e12ef54e34d401db3e084404e7205bd.png"
+    language = "chs"
+
+    # 构造请求参数
+    data = {
+        "isOverlayRequired": "true",
+        "url": img,
+        "language": language
+    }
+
+    # 发送 POST 请求
+    headers = {"apikey": api_key}
+    response = requests.post("https://api.ocr.space/Parse/Image", data=data, headers=headers)
+
+    result=''
+    # 检查响应状态码并打印响应内容
+    if response.status_code == 200:
+        result = response.json()  # 假设返回的是 JSON 格式的数据
+        print(result)
+    else:
+        print(f"请求失败，状态码：{response.status_code}")
+    return {"message": result}    
+
+@app.get("/api/test")
+def hello_world(name: str):
+    return {"name": name}       
