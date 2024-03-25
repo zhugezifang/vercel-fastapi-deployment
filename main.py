@@ -20,9 +20,10 @@ app.add_middleware(
 )
 
 templates = Jinja2Templates(directory="templates")
-@app.get("/hello/", response_class=HTMLResponse)
-async def hello(request: Request):
-   return templates.TemplateResponse("hello.html", {"request": request})
+
+@app.get("/hello/{name}", response_class=HTMLResponse)
+async def hello(request: Request, name:str):
+   return templates.TemplateResponse("hello.html", {"request": request, "name":name})
 
 html = f"""
 <!DOCTYPE html>
