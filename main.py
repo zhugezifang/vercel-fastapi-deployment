@@ -5,6 +5,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 # 允许所有来源的请求
 app.add_middleware(
     CORSMiddleware,
@@ -13,9 +15,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 html = f"""
 <!DOCTYPE html>
