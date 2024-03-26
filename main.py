@@ -8,6 +8,8 @@ import requests
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+from openai import OpenAI
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 # 允许所有来源的请求
@@ -92,3 +94,36 @@ def ai_function(img: str):
 @app.get("/api/test")
 def hello_world(name: str):
     return {"name": name}       
+
+@app.get("/api/ocr")
+def ocr(img: str):
+    client = OpenAI(api_key="1yV6GcI2IoZtgBPSZUM3vYnKr54fYuiiSMREoPC81hfBfVcpwy6MINITZRqEA0ixl", base_url="https://api.stepfun.com/v1")
+
+    completion = client.chat.completions.create(
+        model="step-1v-32k",
+        messages=[
+            {
+                "role": "system",
+                "content": "你是由阶跃星辰提供的AI聊天助手，你除了擅长中文，英文，以及多种其他语言的对话以外，还能够根据用户提供的图片，对内容进行精准的内容文本描述。在保证用户数据安全的前提下，你能对用户的问题和请求，作出快速和精准的回答。同时，你的回答和建议应该拒绝黄赌毒，暴力恐怖主义的内容",
+            },
+            {"role": "user", "content": "你好呀!"},
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": "解析下这张图片里的文字,输出格式为:图片文字：java",
+                    },
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": "https://img-blog.csdnimg.cn/img_convert/2393f6e16cfb4c8f826310799b534f7d.png"
+                        },
+                    },
+                ],
+            },
+        ],
+    )
+
+    print(completion.choices[0].message)
+    return {"ocr": completion.choices[0].message}   
