@@ -63,18 +63,18 @@ async def root():
 async def hello():
     return {'res': 'pong', 'version': __version__, "time": time()}
 
-@app.get("/api/ai")
-def ai_function(img: str):
+@app.get("/api/ocr")
+def ocr(img: str):
 
     # OCR API 的密钥
     api_key = "K88294794488957"
-    #image_url = "https://img-blog.csdnimg.cn/img_convert/9e12ef54e34d401db3e084404e7205bd.png"
+    image_url = "https://img-blog.csdnimg.cn/img_convert/9e12ef54e34d401db3e084404e7205bd.png"
     language = "chs"
 
     # 构造请求参数
     data = {
         "isOverlayRequired": "true",
-        "url": img,
+        "url": image_url,
         "language": language
     }
 
@@ -95,8 +95,8 @@ def ai_function(img: str):
 def hello_world(name: str):
     return {"name": name}       
 
-@app.get("/api/ocr")
-def ocr(img: str):
+@app.get("/ai/ocr")
+def ai_ocr(img: str):
     client = OpenAI(api_key="1yV6GcI2IoZtgBPSZUM3vYnKr54fYuiiSMREoPC81hfBfVcpwy6MINITZRqEA0ixl", base_url="https://api.stepfun.com/v1")
 
     completion = client.chat.completions.create(
