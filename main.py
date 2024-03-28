@@ -95,6 +95,22 @@ def ocr(img: str):
 def hello_world(name: str):
     return {"name": name}       
 
+@app.get("/api/xiaoyuzhou")
+def xiaoyuzhou(url: str)
+    # 2. 获取网页源代码并解析
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    # 3. 获取音频文件的标题和下载地址
+    title_tag = soup.find('meta', {'property': 'og:title'})
+    audio_tag = soup.find('meta', {'property': 'og:audio'})
+    title = title_tag['content']
+    audio_url = audio_tag['content']
+    # 4. 下载音频文件并保存到本地
+    response = requests.get(audio_url)
+    with open(f"{title}.mp3", "wb") as f:
+        f.write(response.content)
+    print(f"音频文件 {title}.mp3 下载完成！")
+
 @app.get("/ai/ocr")
 def ai_ocr(img: str):
     client = OpenAI(api_key="1yV6GcI2IoZtgBPSZUM3vYnKr54fYuiiSMREoPC81hfBfVcpwy6MINITZRqEA0ixl", base_url="https://api.stepfun.com/v1")
