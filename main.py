@@ -23,11 +23,11 @@ app.add_middleware(
 
 templates = Jinja2Templates(directory="templates")
 
-@app.get("/hello1/", response_class=HTMLResponse)
+@app.get("/hello1", response_class=HTMLResponse)
 async def hello1(request: Request):
    return templates.TemplateResponse("hello1.html", {"request": request})
 
-@app.get("/test/", response_class=HTMLResponse)
+@app.get("/test", response_class=HTMLResponse)
 async def test(request: Request):
    return templates.TemplateResponse("test.html", {"request": request})
 
