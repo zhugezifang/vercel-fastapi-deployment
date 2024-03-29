@@ -269,7 +269,6 @@ def do_some_time_consuming_work(id: str):
 
 def do_some_time_consuming_work_2(id: str):
     print("do_some_time_consuming_work_2:"+id)
-    time.sleep(10)
     dict_result[id]="123"
 
 @app.get("/api/tongbu")
