@@ -267,6 +267,17 @@ def do_some_time_consuming_work(id: str):
     time.sleep(30)
     dict_result[id]="123"
 
+def do_some_time_consuming_work_2(id: str):
+    print("do_some_time_consuming_work_2:"+id)
+    time.sleep(10)
+    dict_result[id]="123"
+
+@app.get("/api/tongbu")
+async def tongbu_function(id:str):
+    dict_result[id]=None
+    executor.submit(do_some_time_consuming_work_2, id)
+    return {"message": id}
+
 @app.get("/api/async")
 async def async_function(id:str):
     dict_result[id]=None
