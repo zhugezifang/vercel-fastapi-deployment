@@ -273,9 +273,9 @@ def do_some_time_consuming_work_2(id: str):
     dict_result[id]="123"
 
 @app.get("/api/tongbu")
-def tongbu_function(id:str):
-    #executor.submit(do_some_time_consuming_work_2, id)
-    do_some_time_consuming_work_2(id)
+async def tongbu_function(id:str):
+    executor.submit(do_some_time_consuming_work_2, id)
+    #do_some_time_consuming_work_2(id)
     return {"message": id}
 
 @app.get("/api/async")
