@@ -251,16 +251,16 @@ def xiaoyuzhou_async(title:str,FILE_PATH: str):
     if (task_id != ""):
         query_task(title,task_id)
 
+xiaoyuzhou_result={}
+
+dict_result={}
+
 @app.get("/api/async_result")
 def async_result_function(id:str):
     if dict_result[id] is None:
         return {"message": "async"}
     else:
         return {"message": dict_result[id]}
-
-xiaoyuzhou_result={}
-
-dict_result={}
 
 def do_some_time_consuming_work(id: str):
     print("do_some_time_consuming_work:"+id)
