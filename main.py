@@ -257,7 +257,7 @@ dict_result={}
 
 @app.get("/api/async_result")
 def async_result_function(id:str):
-    if dict_result[id] is None:
+    if id in dict_result:
         return {"message": "async"}
     else:
         return {"message": dict_result[id]}
@@ -273,7 +273,6 @@ def do_some_time_consuming_work_2(id: str):
 
 @app.get("/api/tongbu")
 async def tongbu_function(id:str):
-    dict_result[id]=None
     executor.submit(do_some_time_consuming_work_2, id)
     return {"message": id}
 
