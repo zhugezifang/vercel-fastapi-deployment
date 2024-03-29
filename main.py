@@ -266,6 +266,7 @@ def async_result_function(id:str):
 def do_some_time_consuming_work(id: str,cnt:int):
     print("do_some_time_consuming_work:"+id)
     time.sleep(cnt)
+    print("do_some_time_consuming_work_end")
     dict_result[id]="123"
 
 def do_some_time_consuming_work_2(id: str):
