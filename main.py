@@ -263,9 +263,9 @@ def async_result_function(id:str):
     else:
         return {"message": "async"}
 
-def do_some_time_consuming_work(id: str):
+def do_some_time_consuming_work(id: str,cnt:int):
     print("do_some_time_consuming_work:"+id)
-    time.sleep(10)
+    time.sleep(cnt)
     dict_result[id]="123"
 
 def do_some_time_consuming_work_2(id: str):
@@ -279,9 +279,9 @@ async def tongbu_function(id:str):
     return {"message": id}
 
 @app.get("/api/async")
-async def async_function(id:str):
+async def async_function(id:str,cnt:int):
     dict_result[id]=None
-    executor.submit(do_some_time_consuming_work, id)
+    executor.submit(do_some_time_consuming_work, id,cnt)
     return {"message": id}
 
 @app.get("/ai/ocr")
