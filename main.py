@@ -253,10 +253,11 @@ def xiaoyuzhou_async(title:str,FILE_PATH: str):
 
 xiaoyuzhou_result={}
 
-dict_result={}
+dict_result={"123":"name","456":"age"}
 
 @app.get("/api/async_result")
 def async_result_function(id:str):
+    print("async_result_function:"+id)
     if id in dict_result:
         return {"message": "async"}
     else:
