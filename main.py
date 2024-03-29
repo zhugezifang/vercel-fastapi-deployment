@@ -259,9 +259,9 @@ dict_result={"123":"name","456":"age"}
 def async_result_function(id:str):
     print("async_result_function:"+id)
     if id in dict_result:
-        return {"message": "async"}
-    else:
         return {"message": dict_result[id]}
+    else:
+        return {"message": "async"}
 
 def do_some_time_consuming_work(id: str):
     print("do_some_time_consuming_work:"+id)
