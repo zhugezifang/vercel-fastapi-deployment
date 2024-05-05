@@ -14,6 +14,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from pathlib import Path
 from openai import OpenAI
+import easyocr
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -69,6 +70,13 @@ async def root():
 @app.get('/ping')
 async def hello():
     return {'res': 'pong', 'version': __version__, "time": time()}
+
+@app.get("/api/easyocr")
+def easyocr(){
+    reader = easyocr.Reader(['ch_sim','en']) # this needs to run only once to load the model into memory
+    result = reader.readtext('https://img-blog.csdnimg.cn/img_convert/9e12ef54e34d401db3e084404e7205bd.png')
+    return {"message": result}
+}
 
 @app.get("/api/ocr")
 def ocr(img: str):
