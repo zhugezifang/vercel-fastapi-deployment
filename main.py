@@ -317,3 +317,24 @@ def ai_ocr(img: str):
 
     print(completion.choices[0].message)
     return {"ocr": completion.choices[0].message}   
+
+
+@app.get("/ai/stream")
+def ai_stream(img: str):
+    client = OpenAI(api_key="1yV6GcI2IoZtgBPSZUM3vYnKr54fYuiiSMREoPC81hfBfVcpwy6MINITZRqEA0ixl", base_url="https://api.stepfun.com/v1")
+
+    completion = client.chat.completions.create(
+    model="step-1-200k",
+    stream=True,
+    messages=[
+        {
+            "role": "system",
+            "content": "你是由阶跃星辰提供的AI聊天助手，你擅长中文，英文，以及多种其他语言的对话。在保证用户数据安全的前提下，你能对用户的问题和请求，作出快速和精准的回答。同时，你的回答和建议应该拒绝黄赌毒，暴力恐怖主义的内容",
+        },
+        {"role": "user", "content": "你好，请在64字数以内介绍一下阶跃星辰的人工智能!"},
+    ],
+    )
+ 
+    for chunk in completion:
+       print(chunk)
+    return return {"ocr": test}   
