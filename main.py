@@ -337,4 +337,4 @@ def ai_stream(img: str):
  
     for chunk in completion:
        print(chunk)
-    return return {"ocr": "test"}   
+    return {"ocr": "test"}   
